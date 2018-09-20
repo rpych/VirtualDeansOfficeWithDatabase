@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+
+<context:property-placeholder location="file:${dataLocation}" />
+
+<bean id="os" class="info.doffice.implementations.Subject" >
+<constructor-arg name="name" value="${subject.os.name}" />
+<constructor-arg name="ects" value="${subject.os.ects}" />
+<constructor-arg name="subjectType" value="${subject.os.type}" />
+</bean>
+
+<bean id="stat" class="info.doffice.implementations.Subject" >
+<constructor-arg name="name" value="${subject.stat.name}" />
+<constructor-arg name="ects" value="${subject.stat.ects}" />
+<constructor-arg name="subjectType" value="${subject.stat.type}" />
+</bean>
+
+<bean id="students" class="java.util.LinkedList" />
+
+<bean id="teachers" class="java.util.LinkedList" />
+
+<bean id="controllerDAO" class="info.doffice.controller.ControllerDAO" >
+<property name="subjects">
+	<list value-type="info.doffice.implementations.Subject">
+		<ref bean="os" />
+		<ref bean="stat" />
+	</list>
+</property>
+<property name="students">
+	<list value-type="info.doffice.implementations.Student" >
+	</list>
+</property>
+<property name="teachers">
+	<list value-type="info.doffice.implementations.Teacher">
+	</list>
+</property>
+</bean>
+
+
+<bean id="mainController" class="info.doffice.controller.UserInterface" autowire="byType" />
+
+
+</beans>
